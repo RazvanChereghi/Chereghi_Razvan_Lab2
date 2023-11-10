@@ -4,6 +4,7 @@ using Chereghi_Razvan_Lab2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chereghi_Razvan_Lab2.Migrations
 {
     [DbContext(typeof(Chereghi_Razvan_Lab2Context))]
-    partial class Chereghi_Razvan_Lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20231110150702_AuthorsMigration")]
+    partial class AuthorsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Chereghi_Razvan_Lab2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Chereghi_Razvan_Lab2.Models.Author", b =>
+            modelBuilder.Entity("Chereghi_Razvan_Lab2.Models.Authors", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +42,7 @@ namespace Chereghi_Razvan_Lab2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("Chereghi_Razvan_Lab2.Models.Book", b =>
@@ -51,7 +53,7 @@ namespace Chereghi_Razvan_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("AuthorID")
+                    b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -95,9 +97,11 @@ namespace Chereghi_Razvan_Lab2.Migrations
 
             modelBuilder.Entity("Chereghi_Razvan_Lab2.Models.Book", b =>
                 {
-                    b.HasOne("Chereghi_Razvan_Lab2.Models.Author", "Author")
+                    b.HasOne("Chereghi_Razvan_Lab2.Models.Authors", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorID");
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Chereghi_Razvan_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")
