@@ -37,6 +37,7 @@ namespace Chereghi_Razvan_Lab2.Pages.Books
             }
             Book = book;
             ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID", "LastName");
             return Page();
         }
 
