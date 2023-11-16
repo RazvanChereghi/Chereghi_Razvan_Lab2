@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Chereghi_Razvan_Lab2.Data;
 using Chereghi_Razvan_Lab2.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Chereghi_Razvan_Lab2.Pages.Books
 {
@@ -26,7 +27,7 @@ namespace Chereghi_Razvan_Lab2.Pages.Books
             if (_context.Book != null)
             {
                 Book = await _context.Book
-                    .Include(b=>b.Publisher)
+                    .Include(b => b.Publisher).Include(b => b.Author)
                     .ToListAsync();
             }
         }
